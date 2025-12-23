@@ -29,8 +29,8 @@ import {
   Calendar,
   RotateCcw,
 } from "lucide-react";
-import NoticeAdd from "../NoticeAdd/NoticeAdd";
 import { Link } from "react-router-dom";
+import { api } from "@/utils/api";
 
 export default function NoticeLists() {
   const [notices, setNotices] = useState([]);
@@ -55,9 +55,7 @@ export default function NoticeLists() {
         limit,
       }).toString();
 
-      const response = await fetch(
-        `http://localhost:5000/api/notices/getall?${query}`
-      );
+      const response = await fetch(`${api}/api/notices/getall?${query}`);
       const data = await response.json();
 
       if (data.success) {
@@ -100,7 +98,7 @@ export default function NoticeLists() {
   const togglePublishStatus = async (noticeId) => {
     try {
       const singleResponse = await fetch(
-        `http://localhost:5000/api/notices/getsingle/${noticeId}`
+        `${api}/api/notices/getsingle/${noticeId}`
       );
       const singleData = await singleResponse.json();
 
@@ -110,16 +108,13 @@ export default function NoticeLists() {
       }
 
       const notice = singleData.data;
-      const response = await fetch(
-        `http://localhost:5000/api/notices/update/${noticeId}`,
-        {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            isPublished: !notice.isPublished,
-          }),
-        }
-      );
+      const response = await fetch(`${api}/api/notices/update/${noticeId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          isPublished: !notice.isPublished,
+        }),
+      });
 
       const data = await response.json();
 
@@ -133,6 +128,8 @@ export default function NoticeLists() {
       console.error("Error toggling publish status:", error);
     }
   };
+
+  console.log({ api });
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">

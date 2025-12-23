@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowLeft, ChevronDown, Calendar, Paperclip, X } from "lucide-react";
 import { SuccessModal } from "@/components/Resources/SuccessModal";
 import { Link } from "react-router-dom";
+import { api } from "@/utils/api";
 
 export default function NoticeAdd({ onClose }) {
   const [formData, setFormData] = useState({
@@ -63,7 +64,7 @@ export default function NoticeAdd({ onClose }) {
 
       // if (uploadedFile) payload.file = uploadedFile;
 
-      const response = await fetch("http://localhost:5000/api/notices/create", {
+      const response = await fetch(`${api}/api/notices/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
