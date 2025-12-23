@@ -133,7 +133,7 @@ export default function NoticeLists() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <div className="mx-auto max-w-[1400px]">
+      <div className="mx-auto w-full">
         <div className="mb-6 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-semibold text-gray-900">
