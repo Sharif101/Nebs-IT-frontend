@@ -29,7 +29,7 @@ export function SuccessModal({ isOpen, onClose, noticeTitle }) {
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-3">
-          <Link to="/employee/database">
+          <Link to="/">
             <Button
               variant="outline"
               className="min-w-[120px] border-blue-500 text-blue-600 hover:bg-blue-50"

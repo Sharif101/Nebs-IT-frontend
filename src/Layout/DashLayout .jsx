@@ -41,7 +41,7 @@ const DashLayout = () => {
       icon: Users,
       hasSubmenu: true,
       submenu: [
-        { name: "Employee Database", path: "/employee/database" },
+        { name: "Employee Database", path: "/" },
         { name: "Add New Employee", path: "#" },
         { name: "Performance Report", path: "#" },
         { name: "Performance History", path: "#" },

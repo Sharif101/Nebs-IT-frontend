@@ -9,16 +9,16 @@ let router = createBrowserRouter([
     // element: <Main></Main>,
     element: <DashLayout />,
     children: [
-      {
-        index: true,
-        element: <Navigate to="/employee/database" replace />,
-      },
+      // {
+      //   index: true,
+      //   element: <Navigate to="/" replace />,
+      // },
       {
         path: "/notice/create",
         element: <NoticeAdd />,
       },
       {
-        path: "/employee/database",
+        path: "/",
         element: <NoticeLists />,
       },
     ],

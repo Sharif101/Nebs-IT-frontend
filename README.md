@@ -1,5 +1,7 @@
 # Notice Management System – Frontend
 
+live link : https://nebsit-task.netlify.app/
+
 ## 🛠 Tech Stack
 
 - **React.js** (Vite)

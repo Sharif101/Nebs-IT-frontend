@@ -144,7 +144,7 @@ export default function NoticeAdd({ onClose }) {
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="mx-auto max-full">
         <div className="mb-6 flex items-center gap-3">
-          <Link to="/employee/database">
+          <Link to="/">
             <button
               onClick={onClose}
               className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white hover:bg-gray-50"
@@ -401,7 +401,7 @@ export default function NoticeAdd({ onClose }) {
 
         {/* Actions */}
         <div className="mt-8 flex justify-end gap-3">
-          <Link to="/employee/database">
+          <Link to="/">
             <Button
               variant="outline"
               className="min-w-[120px] border-gray-300 bg-transparent"
