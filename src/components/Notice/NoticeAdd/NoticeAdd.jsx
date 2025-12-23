@@ -7,13 +7,13 @@ import { Link } from "react-router-dom";
 
 export default function NoticeAdd({ onClose }) {
   const [formData, setFormData] = useState({
-    targetType: "Individual",
+    target: "Individual",
     noticeTitle: "",
     employeeId: "",
     employeeName: "",
     position: "",
     noticeType: [],
-    publishDate: "",
+    publishedAt: "",
     noticeBody: "",
   });
 
@@ -33,7 +33,7 @@ export default function NoticeAdd({ onClose }) {
     "Advisory / Personal Reminder",
   ];
 
-  const validateForm = () => {
+  const handleSubmit = async (isDraft = false) => {
     const newErrors = {};
 
     if (!formData.noticeTitle)
@@ -44,22 +44,59 @@ export default function NoticeAdd({ onClose }) {
     if (!formData.position) newErrors.position = "Position is required";
     if (formData.noticeType.length === 0)
       newErrors.noticeType = "Select at least one notice type";
-    if (!formData.publishDate)
-      newErrors.publishDate = "Publish date is required";
+    if (!isDraft && !formData.publishedAt)
+      newErrors.publishedAt = "Publish date is required";
     if (!formData.noticeBody) newErrors.noticeBody = "Notice body is required";
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
 
-  const handleSubmit = () => {
-    if (!validateForm()) return;
+    if (Object.keys(newErrors).length > 0) return;
 
-    console.log("Notice Form Data:", {
-      ...formData,
-      file: uploadedFile,
-    });
-    setShowSuccessModal(true);
+    try {
+      const payload = {
+        ...formData,
+        isDraft,
+        isPublished: !isDraft,
+      };
+
+      // if (isDraft) delete payload.publishedAt;
+
+      // if (uploadedFile) payload.file = uploadedFile;
+
+      const response = await fetch("http://localhost:5000/api/notices/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log("Notice created:", data.data);
+
+        setFormData({
+          targetType: "Individual",
+          noticeTitle: "",
+          employeeId: "",
+          employeeName: "",
+          position: "",
+          noticeType: [],
+          publishedAt: "",
+          noticeBody: "",
+        });
+        setUploadedFile(null);
+
+        if (isDraft) {
+          alert("Draft saved successfully");
+        } else {
+          setShowSuccessModal(true);
+        }
+      } else {
+        console.error("Error creating notice:", data.message);
+      }
+    } catch (error) {
+      console.error("Error creating notice:", error);
+    }
   };
 
   const toggleNoticeType = (type) => {
@@ -131,9 +168,9 @@ export default function NoticeAdd({ onClose }) {
             </label>
             <div className="relative">
               <select
-                value={formData.targetType}
+                value={formData.target}
                 onChange={(e) =>
-                  setFormData({ ...formData, targetType: e.target.value })
+                  setFormData({ ...formData, target: e.target.value })
                 }
                 className="w-full appearance-none rounded-md border border-gray-300 bg-gray-50 px-3 py-2.5 text-sm text-[#0EA5E9] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
               >
@@ -287,16 +324,16 @@ export default function NoticeAdd({ onClose }) {
               <div className="relative">
                 <Input
                   type="date"
-                  value={formData.publishDate}
+                  value={formData.publishedAt}
                   onChange={(e) =>
-                    setFormData({ ...formData, publishDate: e.target.value })
+                    setFormData({ ...formData, publishedAt: e.target.value })
                   }
                   className="bg-white pr-10"
                 />
                 <Calendar className="pointer-events-none absolute right-3 top-2.5 h-5 w-5 text-gray-400" />
-                {errors.publishDate && (
+                {errors.publishedAt && (
                   <p className="text-sm text-red-500 mt-1">
-                    {errors.publishDate}
+                    {errors.publishedAt}
                   </p>
                 )}
               </div>
@@ -376,12 +413,13 @@ export default function NoticeAdd({ onClose }) {
           <Button
             variant="outline"
             className="min-w-[140px] border-blue-500 text-blue-600 hover:bg-blue-50 bg-transparent"
+            onClick={() => handleSubmit(true)}
           >
             Save as Draft
           </Button>
           <Button
             className="min-w-[140px] bg-orange-500 hover:bg-orange-600 text-white"
-            onClick={handleSubmit}
+            onClick={() => handleSubmit(false)}
           >
             <span className="mr-1">✓</span> Publish Notice
           </Button>

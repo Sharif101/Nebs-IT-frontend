@@ -1,5 +1,6 @@
 import { Check, Plus } from "lucide-react";
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 export function SuccessModal({ isOpen, onClose, noticeTitle }) {
   if (!isOpen) return null;
@@ -28,13 +29,15 @@ export function SuccessModal({ isOpen, onClose, noticeTitle }) {
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-3">
-          <Button
-            variant="outline"
-            className="min-w-[120px] border-blue-500 text-blue-600 hover:bg-blue-50"
-            onClick={onClose}
-          >
-            View Notice
-          </Button>
+          <Link to="/employee/database">
+            <Button
+              variant="outline"
+              className="min-w-[120px] border-blue-500 text-blue-600 hover:bg-blue-50"
+              onClick={onClose}
+            >
+              View Notice
+            </Button>
+          </Link>
           <Button
             variant="outline"
             className="min-w-[140px] border-orange-500 text-orange-600 hover:bg-orange-50"
