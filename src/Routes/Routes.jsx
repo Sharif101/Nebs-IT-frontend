@@ -1,6 +1,7 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import DashLayout from "../Layout/DashLayout ";
 import NoticeLists from "@/components/Notice/NoticeLists/NoticeLists";
+import NoticeAdd from "@/components/Notice/NoticeAdd/NoticeAdd";
 
 let router = createBrowserRouter([
   {
@@ -9,7 +10,15 @@ let router = createBrowserRouter([
     element: <DashLayout />,
     children: [
       {
-        path: "/",
+        index: true,
+        element: <Navigate to="/employee/database" replace />,
+      },
+      {
+        path: "/notice/create",
+        element: <NoticeAdd />,
+      },
+      {
+        path: "/employee/database",
         element: <NoticeLists />,
       },
     ],

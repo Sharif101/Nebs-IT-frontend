@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft, ChevronDown, Calendar, Paperclip, X } from "lucide-react";
 import { SuccessModal } from "@/components/Resources/SuccessModal";
+import { Link } from "react-router-dom";
 
 export default function NoticeAdd({ onClose }) {
   const [formData, setFormData] = useState({
@@ -105,12 +106,14 @@ export default function NoticeAdd({ onClose }) {
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="mx-auto max-full">
         <div className="mb-6 flex items-center gap-3">
-          <button
-            onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white hover:bg-gray-50"
-          >
-            <ArrowLeft className="h-4 w-4 text-gray-600" />
-          </button>
+          <Link to="/employee/database">
+            <button
+              onClick={onClose}
+              className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white hover:bg-gray-50"
+            >
+              <ArrowLeft className="h-4 w-4 text-gray-600" />
+            </button>
+          </Link>
           <h1 className="text-xl font-semibold text-gray-900">
             Create a Notice
           </h1>
@@ -360,13 +363,16 @@ export default function NoticeAdd({ onClose }) {
 
         {/* Actions */}
         <div className="mt-8 flex justify-end gap-3">
-          <Button
-            variant="outline"
-            className="min-w-[120px] border-gray-300 bg-transparent"
-            onClick={onClose}
-          >
-            Cancel
-          </Button>
+          <Link to="/employee/database">
+            <Button
+              variant="outline"
+              className="min-w-[120px] border-gray-300 bg-transparent"
+              onClick={onClose}
+            >
+              Cancel
+            </Button>
+          </Link>
+
           <Button
             variant="outline"
             className="min-w-[140px] border-blue-500 text-blue-600 hover:bg-blue-50 bg-transparent"

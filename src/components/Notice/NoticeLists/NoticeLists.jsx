@@ -30,6 +30,7 @@ import {
   RotateCcw,
 } from "lucide-react";
 import NoticeAdd from "../NoticeAdd/NoticeAdd";
+import { Link } from "react-router-dom";
 
 export default function NoticeLists() {
   const [notices, setNotices] = useState([
@@ -112,7 +113,6 @@ export default function NoticeLists() {
   const [filterType, setFilterType] = useState("departments");
   const [statusFilter, setStatusFilter] = useState("all");
   const [publishedDate, setPublishedDate] = useState("");
-  const [showCreateForm, setShowCreateForm] = useState(false);
 
   const toggleNoticeSelection = (noticeId) => {
     setSelectedNotices((prev) =>
@@ -147,9 +147,6 @@ export default function NoticeLists() {
   const activeNotices = notices.filter((n) => n.status === "Published").length;
   const draftNotices = notices.filter((n) => n.status === "Draft").length;
 
-  if (showCreateForm) {
-    return <NoticeAdd onClose={() => setShowCreateForm(false)} />;
-  }
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="mx-auto max-w-[1400px]">
@@ -173,15 +170,17 @@ export default function NoticeLists() {
               </span>
             </div>
           </div>
-          <div className="flex gap-3">
-            <Button
-              className="bg-[#F95524] hover:bg-orange-600 text-white font-[14px]"
-              size="default"
-              onClick={() => setShowCreateForm(true)}
-            >
-              <Plus className="mr-2 h-4 w-4" />
-              Create Notice
-            </Button>
+          <div className="flex items-center gap-3">
+            <Link to="/notice/create">
+              <Button
+                className="bg-[#F95524] hover:bg-orange-600 text-white font-[14px]"
+                size="default"
+              >
+                <Plus className="mr-2 h-4 w-4" />
+                Create Notice
+              </Button>
+            </Link>
+
             <Button
               variant="outline"
               className="border border-[#F59E0B] text-[#F59E0B] font-medium hover:text-[#F59E0B]"
