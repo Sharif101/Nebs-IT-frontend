@@ -2,6 +2,8 @@
 
 live link : https://nebsit-task.netlify.app/
 
+⚠️ Note : Backend server may take 40–50 seconds to load initially due to free hosting service cold start. Please wait patiently before the data appears.
+
 ## 🛠 Tech Stack
 
 - **React.js** (Vite)
@@ -30,10 +32,10 @@ http://localhost:5173
 
 Create the following environment files in the frontend root directory.
 .env.local
-VITE_API_BASE_URL=http://localhost:5000/api
+VITE_API_BASE_URL=http://localhost:5000/
 
 .env.production
-VITE_API_BASE_URL=https://your-backend-live-url/api
+VITE_API_BASE_URL=https://nebs-it-backend.onrender.com
 
 # ⚡ Functionalities
 
