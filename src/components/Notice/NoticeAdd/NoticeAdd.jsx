@@ -23,6 +23,7 @@ export default function NoticeAdd({ onClose }) {
   const [isDragging, setIsDragging] = useState(false);
   const [isNoticeTypeOpen, setIsNoticeTypeOpen] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [isPublishing, setIsPublishing] = useState(false);
 
   const noticeTypeOptions = [
     "Warning / Disciplinary",
@@ -54,6 +55,10 @@ export default function NoticeAdd({ onClose }) {
     if (Object.keys(newErrors).length > 0) return;
 
     try {
+      if (!isDraft) {
+        setIsPublishing(true);
+      }
+
       const payload = {
         ...formData,
         isDraft,
@@ -97,6 +102,8 @@ export default function NoticeAdd({ onClose }) {
       }
     } catch (error) {
       console.error("Error creating notice:", error);
+    } finally {
+      setIsPublishing(false);
     }
   };
 
@@ -419,10 +426,39 @@ export default function NoticeAdd({ onClose }) {
             Save as Draft
           </Button>
           <Button
-            className="min-w-[140px] bg-orange-500 hover:bg-orange-600 text-white"
+            className="min-w-[140px] bg-orange-500 hover:bg-orange-600 text-white flex items-center justify-center gap-2"
             onClick={() => handleSubmit(false)}
+            disabled={isPublishing}
           >
-            <span className="mr-1">✓</span> Publish Notice
+            {isPublishing ? (
+              <>
+                <svg
+                  className="h-4 w-4 animate-spin text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8H4z"
+                  />
+                </svg>
+                Publishing...
+              </>
+            ) : (
+              <>
+                <span className="mr-1">✓</span> Publish Notice
+              </>
+            )}
           </Button>
         </div>
       </div>
